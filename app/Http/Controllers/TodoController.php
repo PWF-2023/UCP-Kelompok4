@@ -31,12 +31,9 @@ class TodoController extends Controller
             // dd($todo);
 
             return view('todo.edit', compact('todo'));
-        } else {
-            //abort(403);
-            //abort(403, 'Noot authorized');
-
-            return redirect()->route('todo.index')->with('danger', 'You are not authorized to edit this todo!');
         }
+
+        return redirect()->route('todo.index')->with('danger', 'You are not authorized to edit this todo!');
     }
     public function update(Request $request, Todo $todo)
     {
