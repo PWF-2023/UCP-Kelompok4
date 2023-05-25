@@ -52,10 +52,15 @@
                                         <a href="{{ route('todo.edit', $todo) }}"
                                             class="hover:underline">{{ $todo->title }}</a>
                                     </td>
-                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                        <a href="{{ route('todo.edit', $todo) }}"
-                                            class="hover:underline">{{ $todo->categories }}</a>
-                                    </td>
+                                    <!-- Memanggil Table Category -->
+                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                        @if ($todo->category_id == null)
+                                            <span></span>
+                                        @else
+                                            {{ $todo->category->title }}
+                                        @endif
+
+                                        
                                     <td class="hidden px-6 py-4 md:block">
                                         @if ($todo->is_complete == false)
                                             <span
