@@ -49,7 +49,7 @@
                                         <a href="{{ route('category.edit', $category) }}"
                                             class="hover:underline">{{ $category->title }}</a>
                                     </td>
-                                    <td class="hidden px-6 py-4 md:block">
+                                    <td class="hidden px-6 py-4 md:block font-medium text-gray-900 dark:text-white">
                                         <p>{{ $category->todos->count() }}
                                         </p>
                                     </td>
