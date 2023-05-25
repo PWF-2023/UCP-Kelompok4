@@ -29,7 +29,7 @@ class CategoryController extends Controller
             return view('category.edit', compact('category'));
         }
 
-        return redirect()->route('category.index')->with('danger', 'You are not authorized to edit this todo!');
+        return redirect()->route('category.index')->with('danger', 'You are not authorized to edit this category!');
     }
 
     public function update(Request $request, Category $category)
@@ -43,16 +43,16 @@ class CategoryController extends Controller
         $category->update([
             'title' => ucfirst($request->title),
         ]);
-        return redirect()->route('category.index')->with('success', 'Todo Updated Successfully!');
+        return redirect()->route('category.index')->with('success', 'Category Updated Successfully!');
     }
 
     public function destroy(Category $category)
     {
         if (auth()->user()->id == $category->user_id) {
             $category->delete();
-            return redirect()->route('category.index')->with('success', 'Todo Deleted Successfully!');
+            return redirect()->route('category.index')->with('success', 'Category Deleted Successfully!');
         } else {
-            return redirect()->route('category.index')->with('danger', 'You are not authorized to delete this todo!');
+            return redirect()->route('category.index')->with('danger', 'You are not authorized to delete this category!');
         }
     }
 
@@ -68,6 +68,6 @@ class CategoryController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        return redirect()->route('category.index')->with('success', 'Todo created successfully!');
+        return redirect()->route('category.index')->with('success', 'Category created successfully!');
     }
 }
