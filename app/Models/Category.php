@@ -15,8 +15,13 @@ class Category extends Model
         'todo'
     ];
 
-    public function todo()
+    public function todos()
     {
-        return $this->belongsTo(Todo::class);
+        return $this->hasMany(Todo::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

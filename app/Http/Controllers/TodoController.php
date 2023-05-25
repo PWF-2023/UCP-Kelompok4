@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class TodoController extends Controller
         $todos = Todo::where('user_id', auth()->user()->id)
             ->orderBy('is_complete', 'asc')
             ->orderBy('created_at', 'desc')
+            ->with('category')
             ->get();
         //dd($todos);
         $todosCompleted = Todo::where('user_id', auth()->user()->id)
@@ -22,15 +24,19 @@ class TodoController extends Controller
 
     public function create()
     {
-        return view('todo.create');
+        $categories = Category::where('user_id', auth()->user()->id)->get();
+
+        return view('todo.create', compact('categories'));
     }
 
     public function edit(Todo $todo)
     {
+        $categories = Category::where('user_id', auth()->user()->id)->get();
+
         if (auth()->user()->id == $todo->user_id) {
             // dd($todo);
 
-            return view('todo.edit', compact('todo'));
+            return view('todo.edit', compact('todo', 'categories'));
         }
 
         return redirect()->route('todo.index')->with('danger', 'You are not authorized to edit this todo!');
@@ -39,6 +45,7 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'category_id',
         ]);
 
         // Practical
@@ -48,6 +55,7 @@ class TodoController extends Controller
         //Eloquent Way - Readable
         $todo->update([
             'title' => ucfirst($request->title),
+            'category_id' => $request->category_id,
         ]);
         return redirect()->route('todo.index')->with('success', 'Todo Updated Successfully!');
     }
@@ -102,27 +110,15 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'category',
         ]);
-
-        // Practical
-        // $todo = new Todo;
-        // $todo->title = $request->title;
-        // $todo->user_id = auth()->user()->id;
-        // $todo->save();
-
-        // Query Builder way
-        // DB::table('todos)->insert([
-        // 'title' => $request->title,
-        // 'user_id' => auth()->user()->id,
-        // 'created_at' => now(),
-        // 'updated_at' => now(),
-        // ])
 
         // Eloquent Way - Readable
 
         $todo = Todo::create([
             'title' => ucfirst($request->title),
             'user_id' => auth()->user()->id,
+            'category_id'=> $request->category_id,
         ]);
 
         return redirect()->route('todo.index')->with('success', 'Todo created successfully!');

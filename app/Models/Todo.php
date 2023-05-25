@@ -12,7 +12,8 @@ class Todo extends Model
     protected $fillable = [
         'title',
         'user_id',
-        'is_complete'
+        'is_complete',
+        'category_id'
     ];
 
     public function user()
@@ -22,6 +23,6 @@ class Todo extends Model
 
     public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }
