@@ -50,12 +50,8 @@
                                             class="hover:underline">{{ $category->title }}</a>
                                     </td>
                                     <td class="hidden px-6 py-4 md:block">
-                                        {{-- <p>{{ $user->todos->count() }}
-                                            <span>
-                                                <span
-                                                    class="text-green-600 dark:text-green-400">({{ $user->categories->where('is_complete', true)->count() }}
-                                            </span>
-                                        </p> --}}
+                                        <p>{{ $category->todos->count() }}
+                                        </p>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex space-x-3">
